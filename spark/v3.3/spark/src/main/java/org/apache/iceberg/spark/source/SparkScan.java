@@ -161,9 +161,17 @@ abstract class SparkScan extends SparkBatch implements Scan, SupportsReportStati
 
   @Override
   public String description() {
+    // TODO add UTs
     String filters =
         filterExpressions.stream().map(Spark3Util::describe).collect(Collectors.joining(", "));
-    return String.format("%s [filters=%s]", table, filters);
+    return String.format(
+        "%s [scanType=%s] [filters=%s]", table, this.getClass().getSimpleName(), filters);
+  }
+
+  @Override
+  public String name() {
+    // TODO add UTs
+    return String.format("Iceberg %s", table.name());
   }
 
   static class ReaderFactory implements PartitionReaderFactory {
